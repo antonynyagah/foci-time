@@ -76,12 +76,11 @@ function BreakTimer() {
     }
   };
 
-  const handleCancel = () => {
-    setConfiguredTime(time);
-  };
+
 
   return (
     <div>
+    Break Timer
       <h1>{formatTime(time)}</h1>
       <button onClick={handleConfigure}>Configure</button>
       {!timerOn && !timerPaused && time === configuredTime && (
@@ -103,15 +102,12 @@ function BreakTimer() {
           setTimerPaused(false);
         }}>Restart</button>
       )}
-      {configuredTime !== time && (
-        <div>
-          <button onClick={handleCancel}>Cancel</button>
-          <button onClick={() => setPrevTime(configuredTime)}>Save</button>
-        </div>
-      )}
+      
     </div>
   );
 }
 
 export default BreakTimer;
+
+
 
