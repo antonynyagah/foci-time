@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
+
+
 function Timer() {
   const [time, setTime] = useState(60);
   const [timerOn, setTimerOn] = useState(false);
   const [timerPaused, setTimerPaused] = useState(false);
   const [prevTime, setPrevTime] = useState(3);
   const [configuredTime, setConfiguredTime] = useState(60);
-
+  
+  // make timer start counting down
   useEffect(() => {
     let interval;
-
+  
     if (timerOn && time > 0) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
@@ -17,23 +20,54 @@ function Timer() {
     } else {
       clearInterval(interval);
     }
-
+  
+    // Adding timer in browser tab
+    document.title = `Timer: ${formatTime(time)}`;
+  
     return () => clearInterval(interval);
   }, [timerOn, time]);
+  
+  //notification effect
 
   useEffect(() => {
     if (time === 0) {
+      console.log('Time is up!');
       if (Notification.permission === "granted") {
+        console.log('Notification permission is granted.');
         new Notification("Time's up!");
-      } else if (Notification.permission !== "denied") {
+        const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO");
+        audio.play().then(() => {
+          console.log('Audio played successfully.');
+        }).catch((error) => {
+          console.error('Error playing audio:', error);
+        });
+      } 
+      
+      else if (Notification.permission !== "denied") {
+        console.log('Notification permission is not granted. Requesting permission...');
         Notification.requestPermission().then((permission) => {
           if (permission === "granted") {
+            console.log('Notification permission granted.');
             new Notification("Time's up!");
+            const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO");
+            audio.play().then(() => {
+              console.log('Audio played successfully.');
+            }).catch((error) => {
+              console.error('Error playing audio:', error);
+            });
+          } else {
+            console.log('Notification permission denied.');
           }
         });
+      } else {
+        console.log('Notification permission denied.');
       }
+      setTimerOn(false);
     }
   }, [time]);
+  
+
+  //timer actions
 
   const startTimer = () => {
     setTimerOn(true);
@@ -64,7 +98,7 @@ function Timer() {
   };
 
   const handleConfigure = () => {
-    const newTime = prompt('Enter the timer duration in minutes:', configuredTime / 60);
+    const newTime = prompt('Enter the length of time in minutes:', configuredTime / 60);
     if (newTime !== null) {
       const parsedNewTime = parseInt(newTime);
       if (isNaN(parsedNewTime)) {
@@ -79,30 +113,47 @@ function Timer() {
 
 
   return (
-    <div>
-        Timer
-      <h1>{formatTime(time)}</h1>
-      <button onClick={handleConfigure}>Configure</button>
-      {!timerOn && !timerPaused && time === configuredTime && (
-        <button onClick={startTimer}>Start</button>
-      )}
-      {timerOn && (
-        <button onClick={pauseTimer}>Pause</button>
-      )}
-      {timerPaused && (
-        <button onClick={resumeTimer}>Resume</button>
-      )}
-      {(time === 0 || timerOn || timerPaused) && (
-        <button onClick={stopTimer}>Stop</button>
-      )}
-      {time === 0 && (
-        <button onClick={() => {
-          setTime(configuredTime);
-          setTimerOn(false);
-          setTimerPaused(false);
-        }}>Restart</button>
-      )}
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       
+      }}>
+
+        <h1>Timer</h1>
+        <h1>{formatTime(time)}</h1>
+        <audio id="notificationSound" src="https://audio.jukehost.co.uk/4D2Yj0Xx5CbBWItxIHdB0Xo9VAzrxb1V"></audio>
+        
+        <button button style={{ cursor: 'pointer', borderRadius: '18px' }} onClick={() => {
+          handleConfigure();document.getElementById('notificationSound').play();}}>Configure</button>
+          
+        {!timerOn && !timerPaused && time === configuredTime && (<button button style={{ cursor: 'pointer', borderRadius: '18px', marginLeft: '10px'  }} onClick={() => {
+        startTimer();document.getElementById('notificationSound').play(); }}>Start</button>
+        
+        )}
+        
+        {timerOn && (
+          <button button style={{ cursor: 'pointer', borderRadius: '18px' }} onClick={() => {
+            pauseTimer();document.getElementById('notificationSound').play(); }}>Pause</button>
+        )}
+
+        {timerPaused && (
+          <button button style={{ cursor: 'pointer', borderRadius: '18px' }} onClick={() => {
+            resumeTimer();document.getElementById('notificationSound').play(); }}>Resume</button>
+        )}
+
+        {(timerOn || timerPaused) && (
+          <button button style={{ cursor: 'pointer', borderRadius: '18px' }} onClick={() => {
+            stopTimer();document.getElementById('notificationSound').play(); }}>Stop</button>
+        )}
+
+        {time === 0 && (
+          <button button style={{ cursor: 'pointer', borderRadius: '18px' }} onClick={() => {
+            setTime(configuredTime);
+            setTimerOn(false);
+            setTimerPaused(false);
+          }}>Restart</button>
+  )}
     </div>
   );
 }

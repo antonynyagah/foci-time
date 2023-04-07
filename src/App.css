@@ -1,4 +1,15 @@
-body{
+body {
   background-color: black;
-  color:red
+  color: red;
+  font-family: "Cooper Black", sans-serif;
+}
+
+h1 {
+  font-family: "Cooper Black", sans-serif;
+  color: red;
+  
+}
+
+.title {
+  text-align: center;
 }
