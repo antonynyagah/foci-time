@@ -30,7 +30,11 @@ function BreakTimer() {
       console.log('Time is up!');
       if (Notification.permission === "granted") {
         console.log('Notification permission is granted.');
-        new Notification("Time's up!");
+        const options = {
+          body: "Time's up!",
+          icon: "./timeisup.jpg"
+        };
+        new Notification("Time's up!", options);
         const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO"); // replace with the path to your sound file
         audio.play().then(() => {
           console.log('Audio played successfully.');
@@ -42,7 +46,11 @@ function BreakTimer() {
         Notification.requestPermission().then((permission) => {
           if (permission === "granted") {
             console.log('Notification permission granted.');
-            new Notification("Time's up!");
+            const options = {
+              body: "Time's up!",
+              icon: "/path/to/your/image.png"
+            };
+            new Notification("Time's up!", options);
             const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO"); // replace with the path to your sound file
             audio.play().then(() => {
               console.log('Audio played successfully.');
@@ -59,6 +67,7 @@ function BreakTimer() {
       setTimerOn(false);
     }
   }, [time]);
+  
   
   const startTimer = () => {
     setTimerOn(true);
@@ -105,11 +114,7 @@ function BreakTimer() {
 
 
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      }}>
+    <div className='timer'>
 
         <h1>Breaker Timer</h1>
         <h1>{formatTime(time)}</h1>

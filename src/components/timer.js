@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-
-
 function Timer() {
   const [time, setTime] = useState(60);
   const [timerOn, setTimerOn] = useState(false);
@@ -16,7 +14,7 @@ function Timer() {
     if (timerOn && time > 0) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
-      }, 1000);
+      }, 10);
     } else {
       clearInterval(interval);
     }
@@ -34,22 +32,28 @@ function Timer() {
       console.log('Time is up!');
       if (Notification.permission === "granted") {
         console.log('Notification permission is granted.');
-        new Notification("Time's up!");
-        const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO");
+        const options = {
+          body: "Time's up!",
+          icon: "./timeisup.jpg"
+        };
+        new Notification("Time's up!", options);
+        const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO"); // replace with the path to your sound file
         audio.play().then(() => {
           console.log('Audio played successfully.');
         }).catch((error) => {
           console.error('Error playing audio:', error);
         });
-      } 
-      
-      else if (Notification.permission !== "denied") {
+      } else if (Notification.permission !== "denied") {
         console.log('Notification permission is not granted. Requesting permission...');
         Notification.requestPermission().then((permission) => {
           if (permission === "granted") {
             console.log('Notification permission granted.');
-            new Notification("Time's up!");
-            const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO");
+            const options = {
+              body: "Time's up!",
+              icon: "/path/to/your/image.png"
+            };
+            new Notification("Time's up!", options);
+            const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO"); // replace with the path to your sound file
             audio.play().then(() => {
               console.log('Audio played successfully.');
             }).catch((error) => {
@@ -113,12 +117,7 @@ function Timer() {
 
 
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      
-      }}>
+    <div className='timer'>
 
         <h1>Timer</h1>
         <h1>{formatTime(time)}</h1>

@@ -1,15 +1,23 @@
+
+
 body {
-  background-color: black;
-  color: red;
-  font-family: "Cooper Black", sans-serif;
+  
+  color:white;
+  font-family:"Cooper Black", sans-serif;
+  background-image: url("./components/background.png");
+  background-size: cover;
 }
 
 h1 {
   font-family: "Cooper Black", sans-serif;
-  color: red;
+  color:white
   
 }
 
 .title {
   text-align: center;
+}
+
+.timer{
+  text-align: center
 }

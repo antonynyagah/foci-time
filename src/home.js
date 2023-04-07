@@ -22,6 +22,10 @@ function Home() {
       With Foci Time you can configure how long you want your timer/break timer to be!
       By using a Pomodoro timer, you can improve your focus, avoid burnout, and increase discipline.
       </p>
+
+      <br></br>
+
+      <p> *Stay tuned as more features for foci time will come to life in due time!*</p>
       
       <Link to="./App">
         <button style={{ cursor: 'pointer', borderRadius: '18px' }} onClick={playNotificationSound}>Get Started</button>
