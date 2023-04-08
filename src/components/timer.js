@@ -14,7 +14,7 @@ function Timer() {
     if (timerOn && time > 0) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
-      }, 10);
+      }, 1000);
     } else {
       clearInterval(interval);
     }
@@ -29,31 +29,25 @@ function Timer() {
 
   useEffect(() => {
     if (time === 0) {
-      console.log('Time is up!');
+      console.log('Time is up! Give yourself a well deserved break.');
       if (Notification.permission === "granted") {
         console.log('Notification permission is granted.');
-        const options = {
-          body: "Time's up!",
-          icon: "./timeisup.jpg"
-        };
-        new Notification("Time's up!", options);
-        const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO"); // replace with the path to your sound file
+        new Notification("Time's up!");
+        const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO");
         audio.play().then(() => {
           console.log('Audio played successfully.');
         }).catch((error) => {
           console.error('Error playing audio:', error);
         });
-      } else if (Notification.permission !== "denied") {
+      } 
+      
+      else if (Notification.permission !== "denied") {
         console.log('Notification permission is not granted. Requesting permission...');
         Notification.requestPermission().then((permission) => {
           if (permission === "granted") {
             console.log('Notification permission granted.');
-            const options = {
-              body: "Time's up!",
-              icon: "/path/to/your/image.png"
-            };
-            new Notification("Time's up!", options);
-            const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO"); // replace with the path to your sound file
+            new Notification("Time's up!");
+            const audio = new Audio("https://audio.jukehost.co.uk/p4eEugXcK27E2y5ktTqzM4qDL65IuVbO");
             audio.play().then(() => {
               console.log('Audio played successfully.');
             }).catch((error) => {
