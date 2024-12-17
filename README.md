@@ -4,4 +4,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Summary
 
-A recreation of the popular word guessing game with a sleek dark theme interface using react
+A minimalist focus timer application with configurable work and break periods
